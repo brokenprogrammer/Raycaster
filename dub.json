@@ -1,0 +1,9 @@
+{
+	"name": "raycaster",
+	"authors": [
+		"Oskar Mendel"
+	],
+	"description": "Raycaster written in D.",
+	"copyright": "Copyright © 2017, Oskar",
+	"license": "MIT"
+}
