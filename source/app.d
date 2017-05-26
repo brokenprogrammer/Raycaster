@@ -61,20 +61,20 @@ bool running = true;
 Window wnd;
 
 // Position vector
-double posX = 22;
-double posY = 12;
+double posX = 3;
+double posY = 7;
 
 // Direction vector.
-double dirX = -1;
+double dirX = 1;
 double dirY = 0;
 
 // 2D Raycaster camera plane.
 double planeX = 0;
-double planeY = 0.66;
+double planeY = 0.5;
 
 //speed modifiers
-double moveSpeed = 0.5; //the constant value is in squares/second
-double rotSpeed = 0.03; //the constant value is in radians/second
+double moveSpeed = 0.03; //the constant value is in squares/second
+double rotSpeed = 0.02; //the constant value is in radians/second
 
 void main() {
 
@@ -142,7 +142,7 @@ void update() {
         // Raycasting
         for (int x = 0; x < SCREEN_WIDTH; x++) {
             // Calculate ray position and direction.
-            double cameraX = 2 * SCREEN_WIDTH / SCREEN_WIDTH - 1;
+            double cameraX = 2 * x / SCREEN_WIDTH - 1;
             double rayPosX = posX;
             double rayPosY = posY;
             double rayDirX = dirX + planeX + cameraX;
@@ -200,16 +200,18 @@ void update() {
                 }
 
                 //Check if ray has hit a wall
-                if (worldMap[mapX][mapY] > 0) hit = 1;
+                if (worldMap[mapX][mapY] > 0) {
+                    hit = 1;
+                }
             }
 
             // Calculate distance projected on camera direction
             // (oblique distance will give fisheye effect!)
             if (side == 0) {
-                perpWallDist = (mapX - rayPosX + (1 - stepX) / 2) / rayDirX;
+                perpWallDist = abs((mapX - rayPosX + (1 - stepX) / 2) / rayDirX);
             }
             else {
-                perpWallDist = (mapY - rayPosY + (1 - stepY) / 2) / rayDirY;
+                perpWallDist = abs((mapY - rayPosY + (1 - stepY) / 2) / rayDirY);
             }
 
             // Calculate height of the line to draw on screen.
@@ -262,16 +264,8 @@ void update() {
 
             vLine.fill = Shape.Fill.Full;
             //vLine.setColor(Color4b.Blue);
-            wnd.draw(vLine);            
+            wnd.draw(vLine);
         }
-
-        Shape v = new Shape(Geometry.Lines,
-        [
-            Vertex(10, 10),
-            Vertex(10, SCREEN_HEIGHT)
-        ]);
-        v.setColor(Color4b.Yellow);
-        wnd.draw(v);
 
         wnd.display();
     }
