@@ -5,5 +5,9 @@
 	],
 	"description": "Raycaster written in D.",
 	"copyright": "Copyright © 2017, Oskar",
-	"license": "MIT"
+	"license": "MIT",
+
+	"dependencies": {
+		"dgame": "~>0.6.5"
+	}
 }
