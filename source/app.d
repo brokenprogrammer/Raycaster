@@ -116,21 +116,22 @@ void update() {
                     if (event.keyboard.key == Keyboard.Key.A) {
                         //both camera direction and camera plane must be rotated
                         double oldDirX = dirX;
-                        dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-                        dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-                        double oldPlaneX = planeX;
-                        planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-                        planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-                    }
-
-                    if (event.keyboard.key == Keyboard.Key.D) {
-                        //both camera direction and camera plane must be rotated
-                        double oldDirX = dirX;
                         dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
                         dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
                         double oldPlaneX = planeX;
                         planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
                         planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
+
+                    }
+
+                    if (event.keyboard.key == Keyboard.Key.D) {
+                        //both camera direction and camera plane must be rotated
+                        double oldDirX = dirX;
+                        dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
+                        dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
+                        double oldPlaneX = planeX;
+                        planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
+                        planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
                     }
 
                 break;
