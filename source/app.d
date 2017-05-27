@@ -142,11 +142,11 @@ void update() {
         // Raycasting
         for (int x = 0; x < SCREEN_WIDTH; x++) {
             // Calculate ray position and direction.
-            double cameraX = 2 * x / SCREEN_WIDTH - 1;
+            double cameraX = 2.0 * x / SCREEN_WIDTH - 1.0;
             double rayPosX = posX;
             double rayPosY = posY;
-            double rayDirX = dirX + planeX + cameraX;
-            double rayDirY = dirY + planeY + cameraX;
+            double rayDirX = dirX + planeX * cameraX;
+            double rayDirY = dirY + planeY * cameraX;
 
             // Which box of the map is the position vector currently in.
             int mapX = to!int(rayPosX);
@@ -157,8 +157,8 @@ void update() {
             double sideDistY;
 
             // Length of ray from one x or y-side to next x or y-side.
-            double deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
-            double deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
+            double deltaDistX = sqrt(1.0 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
+            double deltaDistY = sqrt(1.0 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
             double perpWallDist;
 
             // What side to step in x or y-direction (Either +1 or -1)
@@ -208,22 +208,22 @@ void update() {
             // Calculate distance projected on camera direction
             // (oblique distance will give fisheye effect!)
             if (side == 0) {
-                perpWallDist = abs((mapX - rayPosX + (1 - stepX) / 2) / rayDirX);
+                perpWallDist = abs((mapX - rayPosX + (1.0 - stepX) / 2.0) / rayDirX);
             }
             else {
-                perpWallDist = abs((mapY - rayPosY + (1 - stepY) / 2) / rayDirY);
+                perpWallDist = abs((mapY - rayPosY + (1.0 - stepY) / 2.0) / rayDirY);
             }
 
             // Calculate height of the line to draw on screen.
             int lineHeight = to!int(SCREEN_HEIGHT / perpWallDist);
 
             // Calculate lowest and highest pixel to fill in current stripe
-            int drawStart = to!int(-lineHeight / 2 + SCREEN_HEIGHT / 2);
+            int drawStart = to!int((-lineHeight) / 2.0 + SCREEN_HEIGHT / 2.0);
             if(drawStart < 0) {
                 drawStart = 0;
             }
 
-            int drawEnd = to!int(lineHeight / 2 + SCREEN_HEIGHT / 2);
+            int drawEnd = to!int(lineHeight / 2.0 + SCREEN_HEIGHT / 2.0);
             if(drawEnd >= SCREEN_HEIGHT) {
                 drawEnd = SCREEN_HEIGHT - 1;
             }
