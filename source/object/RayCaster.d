@@ -1,0 +1,6 @@
+module raycaster;
+
+class RayCaster
+{
+    
+}

@@ -1,12 +1,20 @@
 import std.stdio;
 import std.conv;
 import std.math;
+
 import Dgame.Window.Window;
 import Dgame.Window.Event;
 import Dgame.System.Keyboard;
 import Dgame.Graphic;
 import Dgame.Math;
 import Dgame.System.StopWatch;
+
+import screen;
+import minimap;
+import keyboard;
+import worldmap;
+import camera;
+import raycaster;
 
 enum MAP_WIDTH = 24; 	/** Constant width for the map. */
 enum MAP_HEIGHT = 24;	/** Constant height for the map.*/
@@ -78,11 +86,11 @@ double rotSpeed = 0.02; //the constant value is in radians/second
 
 void main() {
 
-    wnd = Window(512, 384, "Raycaster");
-    wnd.setClearColor(Color4b.Black);
-    wnd.setVerticalSync(Window.VerticalSync.Enable);
+    //wnd = Window(512, 384, "Raycaster");
+    //wnd.setClearColor(Color4b.Black);
+    //wnd.setVerticalSync(Window.VerticalSync.Enable);
 
-    update();
+    //update();
 }
 
 void input() {
