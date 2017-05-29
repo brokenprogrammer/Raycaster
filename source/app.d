@@ -13,6 +13,7 @@ import screen;
 import minimap;
 import keyboard;
 import worldmap;
+import vector2d;
 import camera;
 import raycaster;
 
@@ -25,6 +26,7 @@ StopWatch sw;
 
 bool running = true;
 Window wnd;
+Camera cam;
 
 // Position vector
 double posX = 3;
@@ -43,6 +45,7 @@ double moveSpeed = 0.03; //the constant value is in squares/second
 double rotSpeed = 0.02; //the constant value is in radians/second
 
 void main() {
+    cam = new Camera();
 
     wnd = Window(512, 384, "Raycaster");
     wnd.setClearColor(Color4b.Black);
@@ -76,32 +79,21 @@ void update() {
 
                     if (event.keyboard.key == DgameKeyboard.Keyboard.Key.W) {
                         if(!WorldMap.isWall(to!int(posX + dirX * moveSpeed), to!int(posY))) {
-                            posX += dirX * moveSpeed;
+                            cam.pos.x += cam.dir.x * moveSpeed;
                         }
                         if (!WorldMap.isWall(to!int(posX), to!int(posY + dirY * moveSpeed))) {
-                            posY += dirY * moveSpeed;
+                            cam.pos.y += cam.dir.y * moveSpeed;
                         }
                     }
 
                     if (event.keyboard.key == DgameKeyboard.Keyboard.Key.A) {
-                        //both camera direction and camera plane must be rotated
-                        double oldDirX = dirX;
-                        dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
-                        dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
-                        double oldPlaneX = planeX;
-                        planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-                        planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
-
+                        cam.dir.rotate(-rotSpeed);
+                        cam.plane.rotate(-rotSpeed);
                     }
 
                     if (event.keyboard.key == DgameKeyboard.Keyboard.Key.D) {
-                        //both camera direction and camera plane must be rotated
-                        double oldDirX = dirX;
-                        dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-                        dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-                        double oldPlaneX = planeX;
-                        planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-                        planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
+                       cam.dir.rotate(rotSpeed);
+                       cam.plane.rotate(rotSpeed);
                     }
 
                 break;
@@ -114,10 +106,10 @@ void update() {
         for (int x = 0; x < SCREEN_WIDTH; x++) {
             // Calculate ray position and direction.
             double cameraX = 2.0 * x / SCREEN_WIDTH - 1.0;
-            double rayPosX = posX;
-            double rayPosY = posY;
-            double rayDirX = dirX + planeX * cameraX;
-            double rayDirY = dirY + planeY * cameraX;
+            double rayPosX = cam.pos.x;
+            double rayPosY = cam.pos.y;
+            double rayDirX = cam.dir.x + cam.plane.x * cameraX;
+            double rayDirY = cam.dir.y + cam.plane.y * cameraX;
 
             // Which box of the map is the position vector currently in.
             int mapX = to!int(rayPosX);

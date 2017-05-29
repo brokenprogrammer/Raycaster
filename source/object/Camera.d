@@ -1,15 +1,14 @@
 module camera;
 
+import vector2d;
+
 class Camera {
     // Position vector
-    private double posX = 3;
-    private double posY = 7;
+    auto pos = Vector2D(3, 7);
 
     // Direction vector.
-    private double dirX = 1;
-    private double dirY = 0;
+    auto dir = Vector2D(1, 0);
 
     // 2D Raycaster camera plane.
-    private double planeX = 0;
-    private double planeY = 0.5;
+    auto plane = Vector2D(0, 0.5);
 }
