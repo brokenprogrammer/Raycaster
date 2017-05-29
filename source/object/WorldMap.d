@@ -1,6 +1,5 @@
 module worldmap;
 
-class WorldMap
-{
+class WorldMap {
     
 }

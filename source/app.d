@@ -86,11 +86,11 @@ double rotSpeed = 0.02; //the constant value is in radians/second
 
 void main() {
 
-    //wnd = Window(512, 384, "Raycaster");
-    //wnd.setClearColor(Color4b.Black);
-    //wnd.setVerticalSync(Window.VerticalSync.Enable);
+    wnd = Window(512, 384, "Raycaster");
+    wnd.setClearColor(Color4b.Black);
+    wnd.setVerticalSync(Window.VerticalSync.Enable);
 
-    //update();
+    update();
 }
 
 void input() {

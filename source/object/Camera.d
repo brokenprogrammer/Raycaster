@@ -1,7 +1,6 @@
 module camera;
 
-class Camera
-{
+class Camera {
     // Position vector
     private double posX = 3;
     private double posY = 7;

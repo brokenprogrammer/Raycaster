@@ -1,6 +1,5 @@
 module minimap;
 
-class MiniMap
-{
+class MiniMap {
     
 }
