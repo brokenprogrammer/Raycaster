@@ -45,11 +45,14 @@ class WorldMap {
         [2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1]
     ];
 
-    public static bool isWall(double x, double y) {
+    public static bool isWall(int x, int y) {
+        if (worldMap[x][y] > 0) {
+            return true;
+        }
         return false;
     }
 
-    public static int getWall(double x, double y) {
-        return 0;
+    public static int getWall(int x, int y) {
+        return worldMap[x][y];
     }
 }

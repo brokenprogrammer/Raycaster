@@ -16,54 +16,12 @@ import worldmap;
 import camera;
 import raycaster;
 
-enum MAP_WIDTH = 24; 	/** Constant width for the map. */
-enum MAP_HEIGHT = 24;	/** Constant height for the map.*/
-
 enum SCREEN_WIDTH = 512;
 enum SCREEN_HEIGHT = 384;
 
 immutable ubyte FPS = 30;
 immutable ubyte TICKS_PER_FRAME = 1000 / FPS;
 StopWatch sw;
-
-/**
-	Map represented by a twodimensional array.
-	Each number represents a wall inside the map explained
-	in the list bellow.
-
-	0: No wall, empty space.
-	1: Wall
-	2: Wall
-	3: Wall
-	4: Wall
-	5: Wall
-*/
-int [MAP_WIDTH][MAP_HEIGHT] worldMap = [
-    [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2],
-    [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
-    [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,2],
-    [2,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,2],
-    [2,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,2],
-    [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
-    [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
-    [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
-    [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
-    [2,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
-    [2,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
-    [2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
-    [2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1]
-];
 
 bool running = true;
 Window wnd;
@@ -117,8 +75,12 @@ void update() {
                     }
 
                     if (event.keyboard.key == DgameKeyboard.Keyboard.Key.W) {
-                        if(worldMap[to!int(posX + dirX * moveSpeed)][to!int(posY)] == false) posX += dirX * moveSpeed;
-                        if(worldMap[to!int(posX)][to!int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
+                        if(!WorldMap.isWall(to!int(posX + dirX * moveSpeed), to!int(posY))) {
+                            posX += dirX * moveSpeed;
+                        }
+                        if (!WorldMap.isWall(to!int(posX), to!int(posY + dirY * moveSpeed))) {
+                            posY += dirY * moveSpeed;
+                        }
                     }
 
                     if (event.keyboard.key == DgameKeyboard.Keyboard.Key.A) {
@@ -209,7 +171,7 @@ void update() {
                 }
 
                 //Check if ray has hit a wall
-                if (worldMap[mapX][mapY] > 0) {
+                if (WorldMap.isWall(mapX, mapY)) {
                     hit = 1;
                 }
             }
@@ -249,7 +211,7 @@ void update() {
                 Vertex(x, drawEnd)
             ]);
 
-            switch (worldMap[mapX][mapY]) {
+            switch (WorldMap.getWall(mapX, mapY)) {
                 case 1:
                     vLine.setColor(Color4b.Red);
                 break;
