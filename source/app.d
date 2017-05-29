@@ -4,7 +4,7 @@ import std.math;
 
 import Dgame.Window.Window;
 import Dgame.Window.Event;
-import Dgame.System.Keyboard;
+import DgameKeyboard = Dgame.System.Keyboard;
 import Dgame.Graphic;
 import Dgame.Math;
 import Dgame.System.StopWatch;
@@ -112,16 +112,16 @@ void update() {
                 case Event.Type.KeyDown:
                     writeln("Pressed Key ", event.keyboard.key);
 
-                    if (event.keyboard.key == Keyboard.Key.Esc) {
+                    if (event.keyboard.key == DgameKeyboard.Keyboard.Key.Esc) {
                         running = false;
                     }
 
-                    if (event.keyboard.key == Keyboard.Key.W) {
+                    if (event.keyboard.key == DgameKeyboard.Keyboard.Key.W) {
                         if(worldMap[to!int(posX + dirX * moveSpeed)][to!int(posY)] == false) posX += dirX * moveSpeed;
                         if(worldMap[to!int(posX)][to!int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
                     }
 
-                    if (event.keyboard.key == Keyboard.Key.A) {
+                    if (event.keyboard.key == DgameKeyboard.Keyboard.Key.A) {
                         //both camera direction and camera plane must be rotated
                         double oldDirX = dirX;
                         dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
@@ -132,7 +132,7 @@ void update() {
 
                     }
 
-                    if (event.keyboard.key == Keyboard.Key.D) {
+                    if (event.keyboard.key == DgameKeyboard.Keyboard.Key.D) {
                         //both camera direction and camera plane must be rotated
                         double oldDirX = dirX;
                         dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
