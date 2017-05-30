@@ -28,18 +28,6 @@ bool running = true;
 Window wnd;
 Camera cam;
 
-// Position vector
-double posX = 3;
-double posY = 7;
-
-// Direction vector.
-double dirX = 1;
-double dirY = 0;
-
-// 2D Raycaster camera plane.
-double planeX = 0;
-double planeY = 0.5;
-
 //speed modifiers
 double moveSpeed = 0.03; //the constant value is in squares/second
 double rotSpeed = 0.02; //the constant value is in radians/second
@@ -78,10 +66,12 @@ void update() {
                     }
 
                     if (event.keyboard.key == DgameKeyboard.Keyboard.Key.W) {
-                        if(!WorldMap.isWall(to!int(posX + dirX * moveSpeed), to!int(posY))) {
+                        if(!WorldMap.isWall(to!int(cam.pos.x + cam.dir.x * moveSpeed), 
+                                    to!int(cam.pos.y))) {
                             cam.pos.x += cam.dir.x * moveSpeed;
                         }
-                        if (!WorldMap.isWall(to!int(posX), to!int(posY + dirY * moveSpeed))) {
+                        if (!WorldMap.isWall(to!int(cam.pos.x), 
+                                    to!int(cam.pos.y + cam.dir.y * moveSpeed))) {
                             cam.pos.y += cam.dir.y * moveSpeed;
                         }
                     }
