@@ -9,7 +9,6 @@ import Dgame.Graphic;
 import Dgame.Math;
 import Dgame.System.StopWatch;
 
-import screen;
 import minimap;
 import keyboard;
 import worldmap;
@@ -27,10 +26,6 @@ StopWatch sw;
 bool running = true;
 Window wnd;
 Camera cam;
-
-//speed modifiers
-double moveSpeed = 0.03; //the constant value is in squares/second
-double rotSpeed = 0.02; //the constant value is in radians/second
 
 void main() {
     cam = new Camera();
@@ -52,44 +47,7 @@ void update() {
         wnd.clear();
 
         while (wnd.poll(&event)) {
-            switch (event.type) {
-                case Event.Type.Quit:
-                    writeln("Quit Event");
-                    running = false;
-                break;
-
-                case Event.Type.KeyDown:
-                    writeln("Pressed Key ", event.keyboard.key);
-
-                    if (event.keyboard.key == DgameKeyboard.Keyboard.Key.Esc) {
-                        running = false;
-                    }
-
-                    if (event.keyboard.key == DgameKeyboard.Keyboard.Key.W) {
-                        if(!WorldMap.isWall(to!int(cam.pos.x + cam.dir.x * moveSpeed), 
-                                    to!int(cam.pos.y))) {
-                            cam.pos.x += cam.dir.x * moveSpeed;
-                        }
-                        if (!WorldMap.isWall(to!int(cam.pos.x), 
-                                    to!int(cam.pos.y + cam.dir.y * moveSpeed))) {
-                            cam.pos.y += cam.dir.y * moveSpeed;
-                        }
-                    }
-
-                    if (event.keyboard.key == DgameKeyboard.Keyboard.Key.A) {
-                        cam.dir.rotate(-rotSpeed);
-                        cam.plane.rotate(-rotSpeed);
-                    }
-
-                    if (event.keyboard.key == DgameKeyboard.Keyboard.Key.D) {
-                       cam.dir.rotate(rotSpeed);
-                       cam.plane.rotate(rotSpeed);
-                    }
-
-                break;
-
-                default : break;
-            }
+            Keyboard.handleKeypress(event, cam, running); 
         }
 
         // Raycasting
