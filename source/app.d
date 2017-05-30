@@ -37,8 +37,11 @@ void main() {
     update();
 }
 
-void input() {
-
+void input(Event event) {
+    // Handle keypresses.
+    while (wnd.poll(&event)) {
+        Keyboard.handleKeypress(event, cam, running); 
+    }
 }
 
 void update() {
@@ -46,10 +49,8 @@ void update() {
     while (running) {
         wnd.clear();
 
-        // Handle keypresses.
-        while (wnd.poll(&event)) {
-            Keyboard.handleKeypress(event, cam, running); 
-        }
+        input(event);
+
 
         // Handle raycasting.
         RayCaster.castRay(wnd, cam);
